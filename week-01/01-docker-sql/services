@@ -1,0 +1,71 @@
+
+  # healthcheck:
+  #   test: ["CMD", "pg_is_ready", "-U", "airflow"]
+  #   interval: 5s
+  #   retries: 5
+  # restart: always
+  
+
+  # winpty docker run -it \
+  # -e POSTGRES_USER="root" \
+  # -e POSTGRES_PASSWORD="root" \
+  # -e POSTGRES_DB="ny_taxi" \
+  #   -v c:/Users/sclau/Documents/1. Upskill/data-engineering-zoomcamp-notes/week-01/01-docker-sql/ny_taxi_postgres_data:/var/lib/postgresql/data \
+  #   -p 5432:5432 \
+  # postgres:13
+
+
+# services:
+#   pgdatabase:
+#     image: postgres:13
+#     environment:
+#       - POSTGRES_USER=root
+#       - POSTGRES_PASSWORD=root
+#       - POSTGRES_DB=ny_taxi
+#     volumes:
+#       - "./ny_taxi_postgres_data:/var/lib/postgresql/data:rw"
+#     ports:
+#       - "5432:5432"
+#   pgadmin:
+#     image: dpage/pgadmin4
+#     environment:
+#       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+#       - PGADMIN_DEFAULT_PASSWORD=root
+#     ports:
+#       - "8080:80"
+
+services:
+  postgres:
+    image: postgres:13
+  environment:
+      POSTGRES_USER=root
+      POSTGRES_PASSWORD=root
+      POSTGRES_DB=ny_taxi
+  volumes:
+      ny_taxi_postgres_data:/var/lib/postgresql/data
+  ports:
+      8087:5432
+
+# winpty docker run -it \
+#   -e POSTGRES_USER="root" \
+#   -e POSTGRES_PASSWORD="root" \
+#   -e POSTGRES_DB="ny_taxi" \
+#   -v E://Users//sclau//Documents//01-upskill//data-engineering-zoomcamp-notes//week-01//01-docker-sql//ny_taxi_postgres_data:/var//lib/postgresql/data \
+#   -p 5432:5432 \
+#   postgres:13
+
+winpty docker run -it \
+  -e POSTGRES_USER="root" \
+  -e POSTGRES_PASSWORD="root" \
+  -e POSTGRES_DB="ny_taxi" \
+  -v /c/Users/sclau/Documents/01-upskill/data-engineering-zoomcamp-notes/week-01//01-docker-sql/ny_taxi_postgres_data:/var/lib/postgresql/data \
+  -p 8087:5432 \
+  postgres:13
+
+  # winpty docker run -it \
+  # -e POSTGRES_USER="root" \
+  # -e POSTGRES_PASSWORD="root" \
+  # -e POSTGRES_DB="ny_taxi" \
+  # -v e://data-engineering-zoomcamp-notes//week-01//01-docker-sql//ny_taxi_postgres_data:/var/lib/postgresql/data \
+  # -p 5432:5432 \
+  # postgres:13
