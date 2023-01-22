@@ -27,7 +27,6 @@ This repository contains my notes for the DataTalksClub Data Engineering Zoomcam
 </ul>
 </ul>
 <br>
-
 ### Why should a DE care about Docker?
 <li>Allows reproducibility</li>
 <li>Runs on any app, any OS, anywhere</li>
