@@ -27,3 +27,12 @@ This repository contains my notes for the DataTalksClub Data Engineering Zoomcam
 </ul>
 </ul>
 <br>
+
+### Why should a DE care about Docker?
+<li>Allows reproducibility</li>
+<li>Runs on any app, any OS, anywhere</li>
+<li>Local experiments</li>
+<li>Integration test (CI/CD)</li>
+<li>Running pipelines on the cloud (AWS Batch, Kubernetes jobs)</li>
+<li>Spark</li>
+<li>Serverless (AWS Lambda, Google Functions)</li>
