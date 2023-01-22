@@ -26,7 +26,7 @@ This repository contains my notes for the DataTalksClub Data Engineering Zoomcam
 <li>Run - Run refers to the process of starting one or more instances of a <b>container</b> image and running the application inside of it. Containers are lightweight and can be easily started, stopped, and deleted, which makes it easy to manage and scale applications.</li>
 </ul>
 </ul>
-<br>
+
 ### Why should a DE care about Docker?
 <li>Allows reproducibility</li>
 <li>Runs on any app, any OS, anywhere</li>
