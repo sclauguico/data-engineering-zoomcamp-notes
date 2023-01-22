@@ -1,7 +1,7 @@
 ### Data Engineering Zoomcamp Notes
 This repository contains my notes for the DataTalksClub Data Engineering Zoomcamp 2023 by Alexey Grigorev.
 
-#### Notes Using the Cornell Note System with Notion 
+#### Notes Using the Cornell Note-Taking System with Notion 
 <a href="https://www.notion.so/DataTalksClub-Data-Engineering-Zoomcamp-2023-b42377b6ca354579a3f11ec1cb0a4ef3">Click on this link!</a>
 
 # Week 1: Introduction & Pre-requisities
