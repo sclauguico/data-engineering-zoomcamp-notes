@@ -296,3 +296,9 @@ docker run -it test:pandas 2023-01-19
 ```
 
 Note: This is called as parameterizing data pipeline scripts
+
+## Docker Compose and Running Postgres with Docker
+### How to run Postgres on Docker?
+
+To run Postgres, use the official Docker image of Postgres
+
