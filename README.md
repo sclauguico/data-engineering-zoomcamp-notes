@@ -302,6 +302,7 @@ Note: This is called as parameterizing data pipeline scripts
 
 To run Postgres, use the official Docker image of Postgres
 
+```yaml
 services:
   pgdatabase:
     image: postgres:13
@@ -320,3 +321,4 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=root
     ports:
       - "8080:80"
+```
