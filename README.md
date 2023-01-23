@@ -322,3 +322,104 @@ services:
     ports:
       - "8080:80"
 ```
+### What is a Docker compose?
+
+A way of running multiple Docker images
+
+**On the terminal (Git Bash):**
+
+To open editor, enter
+
+```docker
+code .
+```
+
+**On the editor (VS Code):**
+
+To paste the Docker image, create a new file on the editor and paster the image above.
+
+To create the command to run Postgres, configure the following
+
+```docker
+winpty docker run -it \
+  -e POSTGRES_USER="root" \
+  -e POSTGRES_PASSWORD="root" \
+  -e POSTGRES_DB="ny_taxi" \
+  -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+  -p 5432:5432 \
+  postgres:13
+```
+
+To create a local file system to be mapped to a container, create a folder on the directory named ny_taxi_postgres_data
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3e16b0ea-519a-48a9-80ea-c77861ddd4c4/Untitled.png)
+
+Note: 
+
+**On the terminal (Git Bash):**
+
+To run Postgres on Docker, pase the following code on the terminal
+
+```docker
+winpty docker run -it \
+  -e POSTGRES_USER="root" \
+  -e POSTGRES_PASSWORD="root" \
+  -e POSTGRES_DB="ny_taxi" \
+  -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+  -p 5432:5432 \
+  postgres:13
+```
+
+**On the editor (VS Code):**
+
+To verify that we have mapped to a folder in the container, the folder must contain the following files.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/170fc342-8fe1-432a-8014-4a82b2673268/Untitled.png)
+
+**On a new terminal (Git Bash):**
+
+**On the terminal (Git Bash):**
+
+To access this database, use a cli client. In this case, we are going to use pgcli, which is a Python library.
+
+For the following Python libraries to be used, make sure to do **pip install <name-of-library> to install them.**
+
+To login to the database, enter
+
+```docker
+pgcli -h localhost -p 5432 -u root -d ny_taxi
+```
+
+winpty pgcli -h localhost -p 5432 -u root -d ny_taxi
+
+or 
+
+```docker
+pgcli -h 127.0.0.1 -p 5432 -u root -d ny_taxi
+pgcli -h 0.0.0.0 -p 5432 -u root -d ny_taxi
+```
+
+**On the terminal (Git Bash):**
+
+To access the database, enter the password
+
+```docker
+root 
+```
+
+To view the table, enter
+
+```docker
+\dt
+```
+
+To try a requesting from the database, enter
+
+```docker
+SELECT 1
+```
+
+Note:
+
+The database answered with 1 column and 1 row, with a value of 1
+
