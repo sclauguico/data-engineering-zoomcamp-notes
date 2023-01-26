@@ -482,3 +482,6 @@ To upload the data, manipulate it first in the Jupyter notebook. You may copy th
 **On the terminal (Git Bash):**
 
 To continue exploring the dataset uploaded, enter
+  ```sql
+SELECT MAX (tpep_pickup_datetime), MIN(tpep_pickup_datetime), MAX(total_amount) FROm yellow_taxi_data;
+```
