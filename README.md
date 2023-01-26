@@ -322,7 +322,7 @@ services:
     ports:
       - "8080:80"
 ```
-### What is a Docker compose?
+#### What is a Docker compose?
 
 A way of running multiple Docker images
 
@@ -423,3 +423,62 @@ Note:
 
 The database answered with 1 column and 1 row, with a value of 1
 
+### How to upload data on the Postgres ran on Docker?
+
+**On the terminal (Git Bash):**
+
+To install Jupyter, a notebook and an interactive environment for manipulating data, enter
+
+```docker
+pip install jupyter
+```
+
+**On the terminal (Git Bash):**
+
+To run Jupyter, enter
+
+```docker
+jupyter notebook
+```
+
+Note: VS Code or PyCharm can be used instead of Jupyter
+
+**On the notebook (Jupyter):**
+
+To create a new notebook, select on New on the upper right and select Python 3 and name the .ipynb file as upload-data
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/58d044d7-be3e-4628-9691-08d24871aee0/Untitled.png)
+
+To access the data, download the yellow_tripdata_2021-01.csv.gz from the repo to your local directory
+
+[https://github.com/DataTalksClub/nyc-tlc-data/releases/tag/yellow](https://github.com/DataTalksClub/nyc-tlc-data/releases/tag/yellow)
+
+**On the terminal (Git Bash):**
+
+To take  access the first 100 rows or records of the data, and save to a different file called yellow_ head.csv, enter
+
+```docker
+head -n 100 yellow_trip_data_2021-01.csv.gz
+```
+
+To take a look at the number of rows using wc (word count) and -l (to count lines insteaed of words). enter
+
+```docker
+wc -l yellow_trip_data_2021-01.csv.gz
+```
+
+To upload the data, manipulate it first in the Jupyter notebook. You may copy the code on this page, or follow the Jupyter screenshots below.
+
+[data-engineering-zoomcamp-notes/upload-data.ipynb at main · sclauguico/data-engineering-zoomcamp-notes](https://github.com/sclauguico/data-engineering-zoomcamp-notes/blob/main/week-01/01-docker-sql/upload-data.ipynb)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1b50d793-a372-4464-ad0d-20d3c560be5b/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/77338617-8352-4dcc-ad87-712236f8e03b/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5d003031-517e-4c72-83e2-6dc953fabe06/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c57ea981-e8f3-433b-8abf-c207121af3a2/Untitled.png)
+
+**On the terminal (Git Bash):**
+
+To continue exploring the dataset uploaded, enter
