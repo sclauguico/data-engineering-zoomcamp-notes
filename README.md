@@ -485,3 +485,203 @@ To continue exploring the dataset uploaded, enter
   ```sql
 SELECT MAX (tpep_pickup_datetime), MIN(tpep_pickup_datetime), MAX(total_amount) FROm yellow_taxi_data;
 ```
+### How to connect pgAdmin and Postgres?
+
+o view the dataset using a web-based GUI instead of the CLI, use pgAdmin and connect via Postgres
+
+To run pgAdmin instead of installing it,  Google pgadmin docker, copy the pull command, and pull the Docker image that contains the tool
+
+Image needed to run: docker pull dpage/pgadmin4
+
+**On a new terminal (5th Git Bash):**
+
+**On the terminal (5th Git Bash):**
+
+To run pgAdmin on Docker, enter
+
+```docker
+docker run -it \
+  -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+  -e PGADMIN_DEFAULT_PASSWORD=root \
+  -p 8080:80 \
+  dpage/pgadmin4
+```
+
+or
+
+```docker
+winpty docker run -it \
+  -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+  -e PGADMIN_DEFAULT_PASSWORD=root \
+  -p 8080:80 \
+  dpage/pgadmin4
+```
+
+Note:
+
+- The environmental variables in the command will be used as credentials for loggin in to pgAdmin.
+    - 8080 is the port of our host machine mapped to port 80 on the container. pgAdmin is listening for request on port 80 mapped to 8080. And all the request we send to 8080 will be forwarded to 80 on the container
+
+**On the browser (Chrome):**
+
+To access pgAdmin, enter
+
+[http://localhost:8080/](http://localhost:8080/)
+
+It will lead to this page. To login, enter
+
+email address: admin@admin.com
+
+password: root
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c36e65e5-2b75-429c-abe6-c35ee1332454/Untitled.png)
+
+To create a new server, right click on Servers > Register > Server…
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ace4c5c7-28a5-428f-bf5e-230fedf50126/Untitled.png)
+
+To specify name, name it Local docker
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f4ba297e-c0fa-409c-b289-0cb8dcc42294/Untitled.png)
+
+In connection, as specified in the created engine using Python
+
+host: localhost
+
+username: root
+
+password: root
+
+Click save
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2f43745f-81a1-40eb-bc0c-988c7fbdf206/Untitled.png)
+
+❌This will display, “Unable to connect to server” because we are running the pgAdmin image Docker run command inside a container, and also the localhost.
+
+It will find Postgres on this container, but it won’t be able to find it because it does not include Postgres on this container
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/02273aca-3a0a-4de9-bca6-0cc48860bd99/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/10dfde7c-82b2-41e9-a1b1-e77d0bc2db07/Untitled.png)
+
+To connect it, link the two: Database/Postgres and pgAdmin
+
+To do this, put them in one network in separate containers and they will be able to see each other.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9db15c32-4029-41ad-8d77-cdae2b1eb365/Untitled.png)
+
+**On the terminal (5th Git Bash):**
+
+To proceed, stop the current run (CTRL+C) for both pgAdmin and Postgres
+
+To create a network, use docker network create
+
+```docker
+winpty docker network create pg-network
+```
+
+Note: We now have a network when we run Postgres. 
+
+To run the container on this network, enter
+
+```docker
+winpty docker run -it \
+  -e POSTGRES_USER="root" \
+  -e POSTGRES_PASSWORD="root" \
+  -e POSTGRES_DB="ny_taxi" \
+  -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+  -p 5433:5432 \
+  --network=pg-network \
+  --name pg-database \
+  postgres:13
+```
+
+Note: 
+
+- network - name of the network
+- name - lets pgAdmin discover Postgres
+
+**On the terminal (2nd Git Bash) where pgcli was ran:**
+
+To check if we still have the data, enter
+
+```sql
+SELECT COUNT(1) FROM yellow_taxi_data;
+```
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/51975eea-958c-46e4-885b-a15430578a6a/Untitled.png)
+
+**On the terminal (2nd Git Bash) where pgcli was ran:**
+
+To run pgAdmin on the same network, exit from SQL (CTRL+D), then enter
+
+```docker
+winpty docker run -it \
+  -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+  -e PGADMIN_DEFAULT_PASSWORD=root \
+  -p 8080:80 \
+  --network=pg-network \
+  --name pgadmin \
+  dpage/pgadmin4
+```
+
+Note: 
+
+- network - name of the network
+- name - less important here unlike with Postgres, because this will allow pgAdmin to know how to connect to Postgres, but nobody needs to connect to pgAdmin
+
+If there is a conflict on the container name, just change network name and pg-database and pgadmin name by adding -[any number] 
+
+```yaml
+docker network create pg-network-3
+
+winpty docker run -it \
+  -e POSTGRES_USER="root" \
+  -e POSTGRES_PASSWORD="root" \
+  -e POSTGRES_DB="ny_taxi" \
+  -v $(pwd)/ny_taxi_postgres_data:/var/lib/postgresql/data \
+  -p 5432:5432 \
+  --network=pg-network-3 \
+  --name pg-database-4 \
+  postgres:13
+
+winpty docker run -it \
+  -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+  -e PGADMIN_DEFAULT_PASSWORD=root \
+  -p 8080:80 \
+  --network=pg-network \
+  --name pgadmin-2 \
+  dpage/pgadmin4
+```
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/01e38920-d011-43a4-b4dd-05e95a8175c0/Untitled.png)
+
+**On the browser (Chrome):**
+
+To access pgAdmin GUI, enter
+
+[http://localhost:8080/](http://localhost:8080/)
+
+and login
+
+To create a server, right click on Servers > Register > Server…
+
+Enter the following values for each input box
+
+***************General***************
+
+Name: Docker localhost
+
+***Connection***
+
+Host name: pg-database (so pgAdmin will know how to find Postgres)
+
+username: root
+
+password: root
+
+Upon connecting, Click on Servers > Docker [localhost](http://localhost) > Databases > ny_taxi > schemas > Tables > yellow_taxi_data
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f7daad21-fe56-4924-9c87-b68f87133369/Untitled.png)
+
+To write an SQL query, Click on Tools > Query Tool
