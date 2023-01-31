@@ -685,3 +685,7 @@ Upon connecting, Click on Servers > Docker [localhost](http://localhost) > Datab
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f7daad21-fe56-4924-9c87-b68f87133369/Untitled.png)
 
 To write an SQL query, Click on Tools > Query Tool
+  
+```
+  SELECT COUNT(1) FROM yellow_taxi_data;
+```
