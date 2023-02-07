@@ -374,7 +374,7 @@ winpty docker run -it \
 
 To verify that we have mapped to a folder in the container, the folder must contain the following files.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/170fc342-8fe1-432a-8014-4a82b2673268/Untitled.png)
+![image](https://user-images.githubusercontent.com/67311751/217257148-0a607b44-9576-4929-b013-3fa05b442191.png)
 
 **On a new terminal (Git Bash):**
 
@@ -422,6 +422,9 @@ SELECT 1
 Note:
 
 The database answered with 1 column and 1 row, with a value of 1
+  
+  ![image](https://user-images.githubusercontent.com/67311751/217257271-5b145004-a298-4f71-858a-95323d51ebb7.png)
+
 
 ### How to upload data on the Postgres ran on Docker?
 
@@ -447,8 +450,8 @@ Note: VS Code or PyCharm can be used instead of Jupyter
 
 To create a new notebook, select on New on the upper right and select Python 3 and name the .ipynb file as upload-data
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/58d044d7-be3e-4628-9691-08d24871aee0/Untitled.png)
-
+![image](https://user-images.githubusercontent.com/67311751/217257484-94869613-fd61-403a-be53-ed8f4cfad35b.png)
+  
 To access the data, download the yellow_tripdata_2021-01.csv.gz from the repo to your local directory
 
 [https://github.com/DataTalksClub/nyc-tlc-data/releases/tag/yellow](https://github.com/DataTalksClub/nyc-tlc-data/releases/tag/yellow)
@@ -467,17 +470,9 @@ To take a look at the number of rows using wc (word count) and -l (to count line
 wc -l yellow_trip_data_2021-01.csv.gz
 ```
 
-To upload the data, manipulate it first in the Jupyter notebook. You may copy the code on this page, or follow the Jupyter screenshots below.
+To upload the data, manipulate it first in the Jupyter notebook. You may copy the code from the link below. ⏬
 
 [data-engineering-zoomcamp-notes/upload-data.ipynb at main · sclauguico/data-engineering-zoomcamp-notes](https://github.com/sclauguico/data-engineering-zoomcamp-notes/blob/main/week-01/01-docker-sql/upload-data.ipynb)
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1b50d793-a372-4464-ad0d-20d3c560be5b/Untitled.png)
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/77338617-8352-4dcc-ad87-712236f8e03b/Untitled.png)
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5d003031-517e-4c72-83e2-6dc953fabe06/Untitled.png)
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c57ea981-e8f3-433b-8abf-c207121af3a2/Untitled.png)
 
 **On the terminal (Git Bash):**
 
@@ -485,6 +480,9 @@ To continue exploring the dataset uploaded, enter
   ```sql
 SELECT MAX (tpep_pickup_datetime), MIN(tpep_pickup_datetime), MAX(total_amount) FROm yellow_taxi_data;
 ```
+  ![image](https://user-images.githubusercontent.com/67311751/217258014-c20410ea-18b8-447f-8535-54329c5234b6.png)
+
+  
 ### How to connect pgAdmin and Postgres?
 
 o view the dataset using a web-based GUI instead of the CLI, use pgAdmin and connect via Postgres
@@ -534,16 +532,16 @@ email address: admin@admin.com
 
 password: root
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c36e65e5-2b75-429c-abe6-c35ee1332454/Untitled.png)
-
+![image](https://user-images.githubusercontent.com/67311751/217258314-cc692702-60b2-4dc3-897a-8d00feb78f6c.png)
+  
 To create a new server, right click on Servers > Register > Server…
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ace4c5c7-28a5-428f-bf5e-230fedf50126/Untitled.png)
-
+![image](https://user-images.githubusercontent.com/67311751/217258394-08b7b109-002b-4f24-95f3-363c0f1450c2.png)
+  
 To specify name, name it Local docker
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f4ba297e-c0fa-409c-b289-0cb8dcc42294/Untitled.png)
-
+![image](https://user-images.githubusercontent.com/67311751/217258500-27dcf5b9-6b7a-4279-9036-a5e96367f0d2.png)
+  
 In connection, as specified in the created engine using Python
 
 host: localhost
@@ -554,22 +552,22 @@ password: root
 
 Click save
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2f43745f-81a1-40eb-bc0c-988c7fbdf206/Untitled.png)
-
+![image](https://user-images.githubusercontent.com/67311751/217258591-244178a6-ac69-4b7c-add2-6ee8c96dbbe5.png)
+  
 ❌This will display, “Unable to connect to server” because we are running the pgAdmin image Docker run command inside a container, and also the localhost.
 
 It will find Postgres on this container, but it won’t be able to find it because it does not include Postgres on this container
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/02273aca-3a0a-4de9-bca6-0cc48860bd99/Untitled.png)
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/10dfde7c-82b2-41e9-a1b1-e77d0bc2db07/Untitled.png)
-
+![image](https://user-images.githubusercontent.com/67311751/217258698-ab9b4152-d869-40c0-9c98-64399e856ff5.png)
+  
+![image](https://user-images.githubusercontent.com/67311751/217258759-53383abf-246a-431a-ac64-484cc166dfa1.png)
+  
 To connect it, link the two: Database/Postgres and pgAdmin
 
 To do this, put them in one network in separate containers and they will be able to see each other.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9db15c32-4029-41ad-8d77-cdae2b1eb365/Untitled.png)
-
+![image](https://user-images.githubusercontent.com/67311751/217258862-407ad04a-5b0f-48af-9477-87d91399d423.png)
+  
 **On the terminal (5th Git Bash):**
 
 To proceed, stop the current run (CTRL+C) for both pgAdmin and Postgres
@@ -608,9 +606,8 @@ To check if we still have the data, enter
 ```sql
 SELECT COUNT(1) FROM yellow_taxi_data;
 ```
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/51975eea-958c-46e4-885b-a15430578a6a/Untitled.png)
-
+![image](https://user-images.githubusercontent.com/67311751/217259018-911e88ff-cf0a-45db-96d1-41212472bc23.png)
+  
 **On the terminal (2nd Git Bash) where pgcli was ran:**
 
 To run pgAdmin on the same network, exit from SQL (CTRL+D), then enter
@@ -654,8 +651,8 @@ winpty docker run -it \
   dpage/pgadmin4
 ```
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/01e38920-d011-43a4-b4dd-05e95a8175c0/Untitled.png)
-
+![image](https://user-images.githubusercontent.com/67311751/217259132-947f41aa-69f9-4799-926e-b750fb399c7c.png)
+  
 **On the browser (Chrome):**
 
 To access pgAdmin GUI, enter
@@ -682,10 +679,10 @@ password: root
 
 Upon connecting, Click on Servers > Docker [localhost](http://localhost) > Databases > ny_taxi > schemas > Tables > yellow_taxi_data
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f7daad21-fe56-4924-9c87-b68f87133369/Untitled.png)
-
+![image](https://user-images.githubusercontent.com/67311751/217259296-b03bd97a-ea1f-4eda-8bf4-db7a8a068ef4.png)
 To write an SQL query, Click on Tools > Query Tool
   
 ```
   SELECT COUNT(1) FROM yellow_taxi_data;
 ```
+![image](https://user-images.githubusercontent.com/67311751/217259395-dd02c677-7315-468f-9c8e-34c4f1ca37f7.png)
