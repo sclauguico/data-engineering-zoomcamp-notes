@@ -352,7 +352,7 @@ winpty docker run -it \
 
 To create a local file system to be mapped to a container, create a folder on the directory named ny_taxi_postgres_data
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3e16b0ea-519a-48a9-80ea-c77861ddd4c4/Untitled.png)
+![image](https://user-images.githubusercontent.com/67311751/217256754-6696c788-0123-4bce-ae1b-13076929face.png)
 
 Note: 
 
