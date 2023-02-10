@@ -686,3 +686,260 @@ To write an SQL query, Click on Tools > Query Tool
   SELECT COUNT(1) FROM yellow_taxi_data;
 ```
 ![image](https://user-images.githubusercontent.com/67311751/217259395-dd02c677-7315-468f-9c8e-34c4f1ca37f7.png)
+
+
+### How to put ingestion script into Docker?
+#### How to convert Jupyter notebook to a Python script?
+
+**On the terminal (6th Git Bash):**
+
+To convert Jupyter notebook to a Python script, enter
+
+```docker
+jupyter nbconvert --to=script upload-data.ipynb
+```
+
+**On the editor (VS Code):**
+
+To prepare ingest_data.py
+
+1. Open upload-data.py
+2. Rename file to ingest_data.py
+3. Clean the script
+
+```
+**On the terminal (6th Git Bash):**
+
+```
+from time import time
+
+import pandas as pd
+from sqlalchemy import create_engine
+
+engine = create_engine('postgresql://root:root@localhost:5432/ny_taxi')
+
+df_iter = pd.read_csv('yellow_tripdata_2021-01.csv.gz', iterator=True, chunksize=100000)
+
+df = next(df_iter)
+
+df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
+df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
+
+df.head(n=0).to_sql(name='yellow_taxi_data', con=engine, if_exists='replace')
+
+df.to_sql(name='yellow_taxi_data', con=engine, if_exists='append')
+
+while True: 
+    t_start = time()
+
+    df = next(df_iter)
+
+    df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
+    df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
+    
+    df.to_sql(name='yellow_taxi_data', con=engine, if_exists='append')
+
+    t_end = time()
+
+    print('inserted another chunk, took %.3f second' % (t_end - t_start))
+
+```
+
+#### How to parametrize the script with argparse?
+
+**On the editor (VS Code):**
+
+To parse command line arguments, use argparse library
+
+```python
+import os
+
+import agparse
+
+from time import time
+
+import pandas as pd
+from sqlalchemy import create_engine
+
+def main(params):
+    user = params.user
+    password = params.password
+    host = params.host
+    port = params.port
+    db = params.db
+    table_name = params.table_name
+    url = params.url
+    csv_name = 'output.csv'
+
+    os.system(f"wget {url} -O {csv_name}")
+
+    engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{db}')
+    
+    df_iter = pd.read_csv(csv_name, iterator=True, chunksize=100000)
+    
+    df = next(df_iter)
+    
+    df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
+    df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
+    
+    df.head(n=0).to_sql(name=table_name, con=engine, if_exists='replace')
+    
+    df.to_sql(name=table_name, con=engine, if_exists='append')
+    
+    while True: 
+        t_start = time()
+    
+        df = next(df_iter)
+    
+        df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
+        df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
+        
+        df.to_sql(name=table_name, con=engine, if_exists='append')
+    
+        t_end = time()
+    
+        print('inserted another chunk, took %.3f second' % (t_end - t_start))
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(description='Ingest CSV data to Postgres')
+
+    parser.add_argument('user', help='user name for postgres')
+    parser.add_argument('password', help='password for postgres')
+    parser.add_argument('host', help='host for postgres')
+    parser.add_argument('port', help='port for postgres')
+    parser.add_argument('db', help='database name for postgres')
+    parser.add_argument('table-name', help='name of the table where we will write the results to')
+    parser.add_argument('url', help='url of the csv file')
+
+    args = parser.parse_args()
+
+    main(args)
+```
+
+**On the terminal (6th Git Bash):**
+
+To run the script, enter on 
+
+```python
+URL="https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2021-01.csv"
+python ingest_data.py \
+
+    --user=root \
+    --password=root \
+    --host=localhost \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_trips \
+    --url=${URL}
+```
+
+• Note that we've changed the table name from `yellow_taxi_data` to `yellow_taxi_trips`
+
+#### How to Dockerize the ingestion script?
+
+**On the editor (VS Code):**
+
+To write the Dockerfile, 
+
+```python
+FROM python:3.9.1
+
+RUN apt-get install wget
+RUN pip install pandas sqlalchemy psycopg2
+
+WORKDIR /app
+COPY ingest_data.py ingest_data.py
+
+ENTRYPOINT ["python", "ingest_data.py"]
+```
+
+**On the terminal (5th Git Bash):**
+
+To Dockerize the ingestion script, build the Docker image
+
+```python
+winpty docker build -t taxi_ingest:v001 .
+```
+
+Then, run the image
+
+```docker
+winpty docker run -it taxi_ingest:v001 \
+ --user=root \
+ --password=root \
+ --host=localhost \
+ --port=5432 \
+ --db=ny_taxi \
+ --table_name=yellow_taxi_trips \
+ --url=${URL}
+```
+
+To stop a container, first take a look at the existing containers
+
+```docker
+docker ps
+```
+
+or
+
+```docker
+winpty docker ps
+```
+
+Select the container to stop
+
+```docker
+docker kill [copy paste container id]
+```
+
+```docker
+winpty docker kill [copy paste container id]
+```
+
+To run Docker on the network
+
+```docker
+winpty docker run -it \
+--network=pg-network \
+taxi_ingest:v001 \
+ --user=root \
+ --password=root \
+ --host=localhost \
+ --port=5432 \
+ --db=ny_taxi \
+ --table_name=yellow_taxi_trips \
+ --url=${URL}
+```
+
+To start an http server,
+
+```docker
+python -m http.server
+```
+
+Go to browser and enter
+
+localhost:8000
+
+Copy the IPv4 Address by entering
+
+```docker
+ipconfig
+```
+
+To
+
+```docker
+URL = "http://172.24.208.1:8000/yellow_tripdata_2021-01.csv"
+winpty docker run -it \
+--network=pg-network \
+taxi_ingest:v001 \
+ --user=root \
+ --password=root \
+ --host=localhost \
+ --port=5432 \
+ --db=ny_taxi \
+ --table_name=yellow_taxi_trips \
+ --url=${URL}
+```
