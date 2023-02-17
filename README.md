@@ -943,3 +943,128 @@ taxi_ingest:v001 \
  --table_name=yellow_taxi_trips \
  --url=${URL}
 ```
+
+### How to run Postgres and pgAdmin with Docker-Compose?
+
+#### What is a Docker Compose?
+
+It is a utility which allows putting configuration from multiple containers in one file and instead of typing a lot of things, we can just use Docker-Compose
+
+#### How to Install Docker Compose?
+
+If you’re using Windows or MAC, it is already available on your device as it is part of Docker Desktop
+
+**On the terminal (Git Bash):**
+
+To verify,  enter the following
+
+#### How to configure Postgres Database and pgAdmin in Docker-Compose file?
+
+**On the editor (VS Code):**
+
+Create a file: docker-compose.yaml
+
+To create the yaml file
+
+```docker
+services:
+  pgdatabase: 
+    image:postgres:13
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=ny_taxi
+   volumes: 
+    - "./ny_taxi_postgres_data:/var/lib/postgresql/data:rw"
+   ports:
+    - "5432:5432"
+
+   pgadmin: 
+     image: dpage/pgadmin4
+     environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+     ports: 
+      "8080:80"
+```
+
+**On the terminal (Git Bash):**
+
+To check if nothing is running, enter
+
+```docker
+winpty docker ps
+```
+
+To run the docker-compose
+
+```docker
+winpty docker-compose up
+```
+
+To shut down the docker-compose, enter
+
+ 
+
+```docker
+winpty docker-compose down
+```
+
+To run on detach mode, enter
+
+```
+**On the editor (VS Code):**
+
+Create a file: docker-compose.yaml
+
+To create the yaml file
+
+```docker
+services:
+  pgdatabase: 
+    image:postgres:13
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=ny_taxi
+   volumes: 
+    - "./ny_taxi_postgres_data:/var/lib/postgresql/data:rw"
+   ports:
+    - "5432:5432"
+
+   pgadmin: 
+     image: dpage/pgadmin4
+     environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+     ports: 
+      "8080:80"
+```
+
+**On the terminal (Git Bash):**
+
+To check if nothing is running, enter
+
+```docker
+winpty docker ps
+```
+
+To run the docker-compose
+
+```docker
+winpty docker-compose up
+```
+
+To shut down the docker-compose, enter
+
+ 
+
+```docker
+winpty docker-compose down
+```
+
+To run on detach mode, enter
+
+```
+winpty docker-compose up -d
+```
