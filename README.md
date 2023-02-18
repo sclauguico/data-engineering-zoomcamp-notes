@@ -1087,7 +1087,7 @@ winpty docker-compose up -d
     LIMIT 100;
  ```
     
-    To join implicitly
+ To join implicitly
     
  ```sql
     SELECT 
@@ -1108,7 +1108,7 @@ winpty docker-compose up -d
     LIMIT 100;
  ```
     
-    To use an explicit Inner Join
+ To use an explicit Inner Join
     
  ```sql
     SELECT 
@@ -1145,9 +1145,9 @@ winpty docker-compose up -d
     
     LIMIT 100;
 ```
-    
-    To check if there are any IDs that are not in the yellow taxi table
- ```
+To check if there are any IDs that are not in the yellow taxi table
+
+```
   
   SELECT 
 	tpep_pickup_datetime,
