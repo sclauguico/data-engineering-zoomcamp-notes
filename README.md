@@ -1071,9 +1071,9 @@ winpty docker-compose up -d
 
 ### How to SQL?
 
-#### - How to join yellow taxi table with the zones lookup table?
+#### How to join yellow taxi table with the zones lookup table?
     
-    ```sql
+  ```
     SELECT * 
     FROM 
     	yellow_taxi_trips t, 
@@ -1085,11 +1085,11 @@ winpty docker-compose up -d
       t."DOlocationID" = zdo."LOCATIONID"
     
     LIMIT 100;
-    ```
+ ```
     
     To join implicitly
     
-    ```sql
+ ```sql
     SELECT 
     	tpep_pickup_datetime,
     	tpep_dropoff_datetime,
@@ -1106,11 +1106,11 @@ winpty docker-compose up -d
     	t."PUlocationID" = zpu."LocationID" AND 
       t."DOlocationID" = zdo."LocationID"
     LIMIT 100;
-    ```
+ ```
     
     To use an explicit Inner Join
     
-    ```sql
+ ```sql
     SELECT 
     	tpep_pickup_datetime,
     	tpep_dropoff_datetime,
@@ -1125,11 +1125,11 @@ winpty docker-compose up -d
     		ON t."DOLocationID" = zdo."LocationID"
       
     LIMIT 100;
-    ```
+ ```
     
     To check for records with Location ID not in the zones table
     
-    ```sql
+ ```
     SELECT 
     	tpep_pickup_datetime,
     	tpep_dropoff_datetime,
@@ -1144,7 +1144,23 @@ winpty docker-compose up -d
     	"DOLocationID" is NULL
     
     LIMIT 100;
-    ```
+```
     
     To check if there are any IDs that are not in the yellow taxi table
+ ```
+  
+  SELECT 
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	total_amount,
+	"PULocationID",
+	"DOLocationID"
 
+  FROM 
+	yellow_taxi_trips t 
+  
+  WHERE
+	"PULocationID" is NOT IN (SELECT "LocationID" from zones)
+
+  LIMIT 100;
+ ```
