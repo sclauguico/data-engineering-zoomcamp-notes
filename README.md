@@ -1164,3 +1164,154 @@ To check if there are any IDs that are not in the yellow taxi table
 
   LIMIT 100;
  ```
+
+#### How to use left, right, and outer joins when some locations are not in either tables?
+
+To mimic this scenario when some locations are not in the table, delete some samples
+
+```sql
+DELETE FROM zones WHERE "LocationID" = 142;
+```
+
+To use LEFT JOIN
+
+```sql
+SELECT 
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	total_amount,
+
+FROM 
+	yellow_taxi_trips t LEFT JOIN zones zpu
+	  ON t."PULocationID" = zpu."LocationID"
+	LEFT JOIN zones zdo
+		ON t."DOLocationID" = zdo."LocationID"
+  
+LIMIT 100;
+```
+
+To use RIGHT JOIN
+
+```sql
+SELECT 
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	total_amount
+
+FROM 
+	yellow_taxi_trips t RIGHT JOIN zones zpu
+	  ON t."PULocationID" = zpu."LocationID"
+	RIGHT JOIN zones zdo
+		ON t."DOLocationID" = zdo."LocationID"
+  
+LIMIT 100;
+```
+
+To use OUTER JOIN
+
+```sql
+SELECT 
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	total_amoun
+
+FROM 
+	yellow_taxi_trips t OUTER JOIN zones zpu
+	  ON t."PULocationID" = zpu."LocationID"
+	OUTER JOIN zones zdo
+		ON t."DOLocationID" = zdo."LocationID"
+  
+LIMIT 100;
+```
+
+#### How to use GROUP BY?
+
+To get the number of trips each day
+
+```sql
+SELECT 
+	CAST(tpep_dropoff_datetime AS DATE) as "day", 
+	COUNT(1)
+	
+
+FROM 
+	yellow_taxi_trips t 
+  
+GROUP BY
+	CAST(tpep_dropoff_datetime AS DATE);
+```
+
+#### How to use ORDER BY?
+
+To order by day
+
+```sql
+SELECT 
+	CAST(tpep_dropoff_datetime AS DATE) AS "day", 
+	COUNT(1)
+	
+FROM 
+	yellow_taxi_trips t 
+  
+GROUP BY
+	CAST(tpep_dropoff_datetime AS DATE)
+
+ORDER BY "day" ASC;
+```
+
+To order by count
+
+```
+SELECT 
+	CAST(tpep_dropoff_datetime AS DATE) AS "day", 
+	COUNT(1) AS "count"
+	
+FROM 
+	yellow_taxi_trips t 
+  
+GROUP BY
+	CAST(tpep_dropoff_datetime AS DATE)
+
+ORDER BY "count" DESC;
+```
+
+#### How to perform other aggregations?
+
+To get the maximum amount of money that the driver made
+
+```sql
+SELECT 
+	CAST(tpep_dropoff_datetime AS DATE) AS "day", 
+	COUNT(1) AS "count"
+	MAX(total_amount),
+	MAX(passenger_count)
+
+FROM 
+	yellow_taxi_trips t 
+  
+GROUP BY
+	CAST(tpep_dropoff_datetime AS DATE)
+
+ORDER BY "count" DESC;
+```
+
+#### How to GROUP BY multiple fields?
+
+```
+SELECT 
+	CAST(tpep_dropoff_datetime AS DATE) AS "day", 
+	"DOLocationId", 
+	COUNT(1) AS "count"
+	MAX(total_amount),
+	MAX(passenger_count)
+
+FROM 
+	yellow_taxi_trips t 
+  
+GROUP BY
+	1, 2
+
+ORDER BY 
+	"day" ASC,
+  "DOLocationId" ASC;
+```
