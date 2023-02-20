@@ -1315,3 +1315,9 @@ ORDER BY
 	"day" ASC,
   "DOLocationId" ASC;
 ```
+
+### What is Google Cloud Platform?
+
+- Cloud computing services offered by Google
+- Includes a range of hosted services for compute, storage, and application development that run on Google hardware
+- Same hardware on which Google runs its service (Google Search AdWords)
