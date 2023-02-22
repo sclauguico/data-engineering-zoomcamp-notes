@@ -1329,11 +1329,13 @@ ORDER BY
         - These resources can be virtual machines, containers, storage, and networking resources
     - Supports DevOps best practices for change management
     - Managing configuration files in source control to maintain an ideal provisioning state for testing and production environments
+	
 2. What is IaC?
     - Infrastructure-as-Code
         - A framework
     - Build, change, and manage your infrastructure in a safe, consistent, and repeatable way by defining resource configurations that you can version, reuse, and share.
         - A git version control but for infrastructure
+	
 3. Some advantages
     - Infrastructure lifecycle management
     - Version control commits
