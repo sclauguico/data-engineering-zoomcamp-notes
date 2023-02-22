@@ -1321,3 +1321,21 @@ ORDER BY
 - Cloud computing services offered by Google
 - Includes a range of hosted services for compute, storage, and application development that run on Google hardware
 - Same hardware on which Google runs its service (Google Search AdWords)
+
+### What is Terraform?
+
+1. What is Terraform?
+    - Open-source tool by [HashiCorp](https://www.hashicorp.com/), used for provisioning infrastructure resources with declarative configuration files
+        - These resources can be virtual machines, containers, storage, and networking resources
+    - Supports DevOps best practices for change management
+    - Managing configuration files in source control to maintain an ideal provisioning state for testing and production environments
+2. What is IaC?
+    - Infrastructure-as-Code
+        - A framework
+    - Build, change, and manage your infrastructure in a safe, consistent, and repeatable way by defining resource configurations that you can version, reuse, and share.
+        - A git version control but for infrastructure
+3. Some advantages
+    - Infrastructure lifecycle management
+    - Version control commits
+    - Very useful for stack-based deployments, and with cloud providers such as AWS, GCP, Azure, K8S…
+    - State-based approach to track resource changes throughout deployments
