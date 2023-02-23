@@ -1341,3 +1341,8 @@ ORDER BY
     - Version control commits
     - Very useful for stack-based deployments, and with cloud providers such as AWS, GCP, Azure, K8S…
     - State-based approach to track resource changes throughout deployments
+
+### How to setup a GCP infrastructure using Terraform?
+    
+    
+    1. Install Terraform from this link based on your OS and follow installation guideline
